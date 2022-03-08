@@ -31,6 +31,7 @@ def mod_inv(a , n):
             k += 1
 
 
+print(long_to_bytes(350251725201363341802583308674393245081890473196190184232598667822223711226275068721872255925929137864882558012681478820032946410619079932194838177403168344897812999450289328454857332))
 print("Hello!!!")
 
 
@@ -56,10 +57,12 @@ if (phi > 0):
 
 c = int(input("c ="))
 
+# pow(-1, e, phi)
 d = mod_inv( e, phi )
 print ( "d =", d)
 
 # m = pow(c, d)%n
-m =pow(c , d) % n
-plaintext = str(long_to_bytes(m,2))[3:-1]
+m =pow(c , d, n)
+# plaintext = str(long_to_bytes(m,2))[3:-1]
+plaintext = long_to_bytes(m,2).decode()
 print(plaintext)
