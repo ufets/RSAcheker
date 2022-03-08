@@ -1,6 +1,6 @@
 import math
 from Crypto.Util.number import *
-####################################################################
+
 def prime(N):
     if N <2:
         return 0
