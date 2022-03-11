@@ -88,3 +88,25 @@ print(m)
 
 print(unhexlify(m).decode())
 
+'''
+from binascii import unhexlify
+
+# string_to_int
+# string ---> hex_string(hex_value) ---> int
+
+plaintext = 'hello'
+hex_plaintext = plaintext.encode("utf-8").hex()
+print(hex_plaintext)
+value = int(hex_plaintext, 16)
+print(value)
+
+# SHORT VERSION(better use this one)
+value2 = int(plaintext.encode("utf-8").hex(), 16)
+print(value2)
+# now you can operate with value
+
+# int_to_string
+string = unhexlify(hex(value)[2:].replace('L', '')).decode()
+print(string)
+'''
+
