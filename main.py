@@ -40,7 +40,7 @@ p = 337 #int(input("p="))
 while (prime(p) != 0):
     p = int(input("please,try again\n"))
 
-q = 997 #int(input("q="))
+q = 983 #int(input("q="))
 while (prime(q) != 0):
     q = int(input("please,try again\n"))
 
@@ -55,39 +55,35 @@ while ((e <= 1) or (e >= phi) or (m_prime(e, phi) != 1)):
 
 
 #______________________________________
-
 m = str(input("text your message:"))
 
-m = m.encode("utf-8").hex()
 
+m = int(m.encode("utf-8").hex(), 16)
 print(m)
 
-m = int(m,16)
 
-print(m)
-
-c = pow(m, e, n)
+c = pow(m, e)
+c = c % n
 print("c=",c)
+
 # ______________________________________________
 # decryption
 
 
-# pow(-1, e, phi)
+#pow(-1, e, phi)
 d = mod_inv(e, phi)
 print("d =", d)
 
-m = pow(c, d)
-m = m % n
-print("m10=",m)
-m = hex(m)
+c = pow(c, d)
+с = c % n
+print(с)
 
-print("m16=",m)
 
-m = '0'+ m[2:]
-print(m)
+с = hex(с)
+print(с)
 
-print(unhexlify(m).decode())
-
+string = unhexlify(с[2:].replace('L', '')).decode("utf-8")
+print(с)
 '''
 from binascii import unhexlify
 
