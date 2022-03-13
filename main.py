@@ -3,10 +3,11 @@ from binascii import *
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument( "--c", help = "encrypted text")
-parser.add_argument( "--n", help = "part (n) of public key")
+parser.add_argument("--c", help="encrypted text")
+parser.add_argument("--n", help="part (n) of public key")
 
 args = parser.parse_args()
+
 
 def prime(N):
     if N < 2:
@@ -85,7 +86,7 @@ if args.c and args.n:
         print("hmm, something is wrong...")
 
 '''
-# CRYPTION + DECRYPTIOM
+# CRYPTION + DECRYPTION
 
 #key generation
 p = 359334085968622831041960188598043661065388726959079837
@@ -115,6 +116,7 @@ print("message:", m)
 
 
 '''
+
 '''
 from binascii import unhexlify
 
