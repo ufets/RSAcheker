@@ -1,5 +1,5 @@
 import argparse
-import functions
+from functions import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--c", help="ciphertext text")
