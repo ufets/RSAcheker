@@ -2,10 +2,15 @@ import math
 from binascii import *
 
 
+def validation(a):
+    a = int(a[2:], 16)
+    return a
+
+
 def prime(n):
     if n < 2:
         return 0
-    for i in range(2, int(math.sqrt(N))):
+    for i in range(2, int(math.sqrt(n))):
         if n % i == 0:
             return 1
     return 0
@@ -21,6 +26,18 @@ def m_prime(a, b):
         return 1
     else:
         return 0
+
+
+def find_n_root(root, n):
+    low = 0
+    high = n
+    while low < high:
+        middle = (low + high) // 2
+        if middle ** root < n:
+            low = middle + 1
+        else:
+            high = middle
+    return low
 
 
 def find_cube_root(n):
@@ -44,20 +61,6 @@ def mod_inv(a, n):
             k += 1
 
 
-def little_exponent_attack(e, c, n, num_of_iterations):
-    if e == 3:
-        print("Just a minute, hacking by bruteforce...")
-        n1 = int(n, 16)
-        c1 = int(c, 16)
-        k = 0
-        while k < num_of_iterations:
-            m = find_cube_root(c1 + k * n1)
-            if m ** 3 % n1 == c1:
-                return m
-            k += 1
-    return -1
-
-
 def decode_m(m):
     m = hex(m)
     m = m[2:]
@@ -65,3 +68,16 @@ def decode_m(m):
         m = '0' + m
     m = unhexlify(m.replace('L', '')).decode("utf-8", "backslashreplace")
     return m
+
+
+def decryption(e, c, n, p, q):
+    phi = (p - 1) * (q - 1)
+    d = pow(e, -1, phi)
+    m = pow(c, d, n)
+    m = hex(m)
+    m = m[2:]
+    if len(m) %2 != 0:
+        m = '0' + m
+    m = unhexlify(m.replace('L', '')).decode("utf-8", "backslashreplace")
+    return m
+
