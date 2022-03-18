@@ -76,8 +76,15 @@ def decryption(e, c, n, p, q):
     m = pow(c, d, n)
     m = hex(m)
     m = m[2:]
-    if len(m) %2 != 0:
+    if len(m) % 2 != 0:
         m = '0' + m
     m = unhexlify(m.replace('L', '')).decode("utf-8", "backslashreplace")
     return m
+
+
+def is_integer(a):
+    if a % 1 == 0:
+        return 1
+    else:
+        return 0
 
