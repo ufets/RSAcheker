@@ -17,9 +17,8 @@ def is_p_q_close(n, num_of_iterations=10000):
     t = find_n_root(2, n)
     for i in range(num_of_iterations):
         s2 = (t + i)**2 - n
-        if is_integer(s2):
-            s = find_n_root(2, s2)
-            p = t + s
-            q = t - s
-            return p, q
+        s = find_n_root(2, s2)
+        p = t + s
+        q = t - s
+        return p, q
     return -1, -1
