@@ -22,3 +22,23 @@ def is_p_q_close(n, num_of_iterations=10000):
         q = t - s
         return p, q
     return -1, -1
+
+
+def pollard_p_1(n):
+    a = 2   # base
+    k = 2   # factor
+    p = 1
+    while 1 <= p < n:
+        print("Iteration: ", k)
+        a = (a**k) % n
+        print("a = ", a)
+        p = math.gcd(a - 1, n)
+        print("p = ", p)
+        if p == 1:
+            k += 1
+        elif p == n:
+            return -1
+        else:
+            q = n/p
+            return p, q
+

@@ -19,12 +19,29 @@ if args.c and args.n:
     else:
         e = 3
 
+    flag = 0
+
     if e != 3:
-        p, q = is_p_q_close(n)
-        if p != -1:
-            m = decryption(e, c, n, p, q)
-        else:
-            m = -1
+        if not flag:
+            try:
+                p, q = pollard_p_1(n)
+                flag = 1
+            except -1:
+                m = -1
+                print("Pollard algorithm didn`t work")
+            else:
+                m = decryption(e, c, n, p, q)
+
+        if not flag:
+            try:
+                p, q = is_p_q_close(n)
+                flag = 1
+            except -1:
+                m = -1
+                print("P&Q algorithm didn`t work")
+            else:
+                m = decryption(e, c, n, p, q)
+
     else:
         m = little_exponent_attack(3, c, n)
         m = decode_m(m)
