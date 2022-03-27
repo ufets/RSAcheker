@@ -13,7 +13,6 @@ print("Hello!!!")
 if args.c and args.n:
     n = validation(args.n)
     c = validation(args.c)
-
     if args.e:
         e = validation(args.e)
     else:
@@ -24,6 +23,7 @@ if args.c and args.n:
     if e != 3:
         if not flag:
             try:
+                print("\nHacking by Pollard algorithm:\n")
                 p, q = pollard_p_1(n)
                 flag = 1
             except -1:
@@ -31,6 +31,7 @@ if args.c and args.n:
                 print("Pollard algorithm didn`t work")
             else:
                 m = decryption(e, c, n, p, q)
+
 
         if not flag:
             try:
@@ -40,6 +41,7 @@ if args.c and args.n:
                 m = -1
                 print("P&Q algorithm didn`t work")
             else:
+
                 m = decryption(e, c, n, p, q)
 
     else:
