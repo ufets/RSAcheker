@@ -31,10 +31,8 @@ def pollard_p_1(n):
     print("Iteration: ")
     while p == 1:
         print("\r", k, end='')
-        a = pow(a ,k ,n)
-        # print(f"a = {a}\r", a,)
+        a = pow(a, k, n)
         p = math.gcd(a - 1, n)
-        # print("p = ", p)
         k += 1
     if p == n:
         return -1

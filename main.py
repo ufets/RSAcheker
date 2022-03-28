@@ -32,11 +32,10 @@ if args.c and args.n:
             else:
                 m = decryption(e, c, n, p, q)
 
-
         if not flag:
             try:
                 p, q = is_p_q_close(n)
-                flag =1
+                flag = 1
             except -1:
                 m = -1
                 print("P&Q algorithm didn`t work")
