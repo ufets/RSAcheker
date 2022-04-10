@@ -1,10 +1,12 @@
 import argparse
+import sys
 from hacks import *
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--c", help="ciphertext text")
-parser.add_argument("--n", help="part (n) of public key")
-parser.add_argument("--e", help="exponent")
+parser.add_argument("-c", nargs='+', help="ciphertext text")
+parser.add_argument("-n", help="part (n) of public key")
+parser.add_argument("-e", help="exponent")
+parser.add_argument('-a', help="name of algorithm: pollard, pq")
 
 args = parser.parse_args()
 
@@ -12,45 +14,80 @@ print("Hello!!!")
 
 if args.c and args.n:
     n = validation(args.n)
-    c = validation(args.c)
-    if args.e:
-        e = validation(args.e)
-    else:
-        e = 3
+    '''make c a container'''
+    c = args.c
+else:
+    print("No arguments, bye")
+    sys.exit()
 
-    flag = 0
+if args.e:
+    e = validation(args.e)
+else:
+    e = 3
 
-    if e != 3:
-        if not flag:
-            try:
-                print("\nHacking by Pollard algorithm:\n")
-                p, q = pollard_p_1(n)
-                flag = 1
-            except -1:
-                m = -1
-                print("Pollard algorithm didn`t work")
+if args.a is None:
+    if len(c) == 1:
+
+        c = validation(c[0])
+
+        if e == 3:
+            print("\nHacking by little exponent attack:\n")
+
+            m = little_exponent_attack(3, c, n)
+            if m != -1:
+                m = decode_m(m)
+                print("Your message: ", m)
             else:
-                m = decryption(e, c, n, p, q)
+                print("Little exponent attack didn't work\n")
 
-        if not flag:
-            try:
+        else:
+
+            flag = 0
+
+            if not flag:
+                print("\nHacking by P&Q algorithm\n")
                 p, q = is_p_q_close(n)
-                flag = 1
-            except -1:
-                m = -1
-                print("P&Q algorithm didn`t work")
-            else:
+                if p == -1:
+                    print("P&Q algorithm didn't work\n")
+                else:
+                    flag = 1
+                    m = decryption(e, c, n, p, q)
+                    print("Your message: ", m)
 
-                m = decryption(e, c, n, p, q)
-
+            if not flag:
+                print("\nHacking by Pollard algorithm\n")
+                p, q = pollard_p_1(n)
+                if p == -1:
+                    print("\nPollard algorithm didn't work\n")
+                else:
+                    flag = 1
+                    m = decryption(e, c, n, p, q)
+                    print("\nYour message: ", m)
     else:
-        m = little_exponent_attack(3, c, n)
-        m = decode_m(m)
+        crt()
+else:
 
-    if m != -1:
-        print("\nmessage:", m)
-    else:
-        print("hmm, something is wrong...")
+    c = validation(c[0])
+
+    if args.a == "pollard":
+        print("\nHacking by Pollard algorithm\n")
+        p, q = pollard_p_1(n)
+        if p == -1:
+            print("\nPollard algorithm didn't work\n")
+        else:
+            flag = 1
+            m = decryption(e, c, n, p, q)
+            print("\nYour message: ", m)
+
+    if args.a == "pq":
+        print("\nHacking by P&Q algorithm\n")
+        p, q = is_p_q_close(n)
+        if p == -1:
+            print("P&Q algorithm didn't work\n")
+        else:
+            flag = 1
+            m = decryption(e, c, n, p, q)
+            print("Your message: ", m)
 
 
 '''

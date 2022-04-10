@@ -35,7 +35,11 @@ def pollard_p_1(n):
         p = math.gcd(a - 1, n)
         k += 1
     if p == n:
-        return -1
+        return -1, -1
     else:
         q = n // p
         return p, q
+
+
+def crt():
+    return
