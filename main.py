@@ -13,7 +13,7 @@ args = parser.parse_args()
 print("Hello!!!")
 
 if args.c and args.n:
-    n = validation(args.n)
+    n = args.n
     c = args.c
 else:
     print("No arguments, bye")
@@ -63,7 +63,7 @@ if args.a is None:
                     m = decryption_crt(e, c, n, p, q)
                     print("\nYour message: ", m)
     else:
-        hastads_attack()
+        decode_m(hastads_attack(c, n, e))
 else:
 
     c = validation(c[0])

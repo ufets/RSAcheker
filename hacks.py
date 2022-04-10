@@ -41,5 +41,21 @@ def pollard_p_1(n):
         return p, q
 
 
-def hastads_attack():
-    return
+def hastads_attack(c, n, e):
+    num = c.count()
+    table = []
+    pr = 1
+    for i in num:
+        c[i] = validation(c[i])
+        table[i][0] = c[i]
+        n[i] = validation(n[i])
+        pr = pr * n[i]
+    for i in num:
+        table[i][1] = pr / n[i]
+    for i in num:
+        table[i][2] = pow(table[i][1], -1, n[i])
+    me = 0
+    for i in num:
+        me = me + table[i][3] * table[i][0] * table[i][1] * table[i][2]
+    m = find_n_root(me, e)
+    return m
