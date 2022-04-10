@@ -81,3 +81,21 @@ def decryption(e, c, n, p, q):
     m = unhexlify(m.replace('L', '')).decode("utf-8", "backslashreplace")
     return m
 
+
+def decryption_crt(e, c, n, p, q):
+    phi = (p - 1) * (q - 1)
+    d = pow(e, -1, phi)
+    dp = d % (p-1)
+    dq = d % (q-1)
+    q_inv = pow(q, -1, p)
+    m1 = pow(c, dp, p)
+    m2 = pow(c, dq, q)
+    h = (q_inv * (m1 - m2)) % p
+    m = (m2 + h * q) % n
+
+    m = hex(m)
+    m = m[2:]
+    if len(m) % 2 != 0:
+        m = '0' + m
+    m = unhexlify(m.replace('L', '')).decode("utf-8", "backslashreplace")
+    return m

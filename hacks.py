@@ -41,5 +41,5 @@ def pollard_p_1(n):
         return p, q
 
 
-def crt():
+def hastads_attack():
     return

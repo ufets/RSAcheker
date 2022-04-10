@@ -14,7 +14,6 @@ print("Hello!!!")
 
 if args.c and args.n:
     n = validation(args.n)
-    '''make c a container'''
     c = args.c
 else:
     print("No arguments, bye")
@@ -51,7 +50,7 @@ if args.a is None:
                     print("P&Q algorithm didn't work\n")
                 else:
                     flag = 1
-                    m = decryption(e, c, n, p, q)
+                    m = decryption_crt(e, c, n, p, q)
                     print("Your message: ", m)
 
             if not flag:
@@ -61,10 +60,10 @@ if args.a is None:
                     print("\nPollard algorithm didn't work\n")
                 else:
                     flag = 1
-                    m = decryption(e, c, n, p, q)
+                    m = decryption_crt(e, c, n, p, q)
                     print("\nYour message: ", m)
     else:
-        crt()
+        hastads_attack()
 else:
 
     c = validation(c[0])
