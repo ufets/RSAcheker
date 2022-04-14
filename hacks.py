@@ -41,21 +41,26 @@ def pollard_p_1(n):
         return p, q
 
 
+def crt(c, n):
+    table = 0
+    # вынос
+    num = len(c)
+    for i in range(num):
+        c[i] = int(c[i])
+        n[i] = int(n[i])
+    pr = math.prod(n)
+
+    for c_i, n_i in zip(c, n):
+        N_i = pr // n_i
+        X_i = pow(N_i, -1, n_i)
+        table += c_i * N_i * X_i
+
+    return table % pr
+
+
 def hastads_attack(c, n, e):
-    num = c.count()
-    table = []
-    pr = 1
-    for i in num:
-        c[i] = validation(c[i])
-        table[i][0] = c[i]
-        n[i] = validation(n[i])
-        pr = pr * n[i]
-    for i in num:
-        table[i][1] = pr / n[i]
-    for i in num:
-        table[i][2] = pow(table[i][1], -1, n[i])
-    me = 0
-    for i in num:
-        me = me + table[i][3] * table[i][0] * table[i][1] * table[i][2]
-    m = find_n_root(me, e)
+
+    m = crt(c, n)
+    m = find_n_root(e, m)
+
     return m

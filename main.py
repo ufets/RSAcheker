@@ -4,9 +4,9 @@ from hacks import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-c", nargs='+', help="ciphertext text")
-parser.add_argument("-n", help="part (n) of public key")
+parser.add_argument("-n", nargs='+', help="part (n) of public key")
 parser.add_argument("-e", help="exponent")
-parser.add_argument('-a', help="name of algorithm: pollard, pq")
+parser.add_argument('-a', help="name of algorithm: pollard, pq, hastad")
 
 args = parser.parse_args()
 
@@ -64,29 +64,39 @@ if args.a is None:
                     print("\nYour message: ", m)
     else:
         decode_m(hastads_attack(c, n, e))
-else:
 
+if args.a == "pollard":
+    print("\nHacking by Pollard algorithm\n")
     c = validation(c[0])
+    n = validation(n[0])
+    p, q = pollard_p_1(n)
+    if p == -1:
+        print("\nPollard algorithm didn't work\n")
+    else:
+        flag = 1
+        m = decryption(e, c, n, p, q)
+        print("\nYour message: ", m)
 
-    if args.a == "pollard":
-        print("\nHacking by Pollard algorithm\n")
-        p, q = pollard_p_1(n)
-        if p == -1:
-            print("\nPollard algorithm didn't work\n")
-        else:
-            flag = 1
-            m = decryption(e, c, n, p, q)
-            print("\nYour message: ", m)
+if args.a == "pq":
+    print("\nHacking by P&Q algorithm\n")
+    c = validation(c[0])
+    n = validation(n[0])
+    p, q = is_p_q_close(n)
+    if p == -1:
+        print("P&Q algorithm didn't work\n")
+    else:
+        flag = 1
+        m = decryption(e, c, n, p, q)
+        print("Your message: ", m)
 
-    if args.a == "pq":
-        print("\nHacking by P&Q algorithm\n")
-        p, q = is_p_q_close(n)
-        if p == -1:
-            print("P&Q algorithm didn't work\n")
-        else:
-            flag = 1
-            m = decryption(e, c, n, p, q)
-            print("Your message: ", m)
+if args.a == "hastad":
+    print("\nHacking by Hastad's algorithm\n")
+    # if p == -1:
+    #     print("Hastad's algorithm didn't work\n")
+    # else:
+    flag = 1
+    print("Your message: ", decode_m(hastads_attack(c, n, e)))
+
 
 
 '''
