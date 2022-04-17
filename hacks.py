@@ -59,8 +59,21 @@ def crt(c, n):
 
 
 def hastads_attack(c, n, e):
-
     m = crt(c, n)
     m = find_n_root(e, m)
-
     return m
+
+
+def dp_brute(c, n, e):
+    m = 5
+    p = 1
+    for dp in range(1000000):
+        p = math.gcd(pow(m, dp * e, n) - m, n)
+        if p != 1:
+            break
+    if p == 1:
+        print("\nNe poluchilos, ne fartanulo")
+    else:
+        q = n // p
+        m = decryption_crt(e, c, n, p, q)
+        print("Your message: ", m)
