@@ -16,7 +16,7 @@ def little_exponent_attack(e, c, n, num_of_iterations=10000):
 def is_p_q_close(n, num_of_iterations=10000):
     t = find_n_root(2, n)
     for i in range(num_of_iterations):
-        s2 = (t + i)**2 - n
+        s2 = (t + i) ** 2 - n
         s = find_n_root(2, s2)
         p = t + s
         q = t - s
@@ -25,8 +25,8 @@ def is_p_q_close(n, num_of_iterations=10000):
 
 
 def pollard_p_1(n):
-    a = 2   # base
-    k = 2   # factor
+    a = 2  # base
+    k = 2  # factor
     p = 1
     print("Iteration: ")
     while p == 1:
@@ -77,3 +77,18 @@ def dp_brute(c, n, e):
         q = n // p
         m = decryption_crt(e, c, n, p, q)
         print("Your message: ", m)
+
+
+def wieners_attack(e, n, c):
+    row = continued_fraction(e, n)
+    for i in range(2, len(row) + 1):
+        d, k = req(row, 0, i)
+        phi = (e * d - 1) // k
+        p, q = solve_quadratics(1, n - phi + 1, n)
+        if p is None:
+            continue
+
+        if p*q == n:
+            m = decryption_crt(e, c, n, abs(p), abs(q))
+            print("Your message: ", m)
+            return

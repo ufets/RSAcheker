@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-c", nargs='+', help="ciphertext text")
 parser.add_argument("-n", nargs='+', help="part (n) of public key")
 parser.add_argument("-e", help="exponent")
-parser.add_argument('-a', help="name of algorithm: pollard, pq, hastad, dp_brute")
+parser.add_argument('-a', help="name of algorithm: pollard, pq, hastad, dp_brute, wieners")
 
 args = parser.parse_args()
 
@@ -91,9 +91,6 @@ if args.a == "pq":
 
 if args.a == "hastad":
     print("\nHacking by Hastad's algorithm\n")
-    # if p == -1:
-    #     print("Hastad's algorithm didn't work\n")
-    # else:
     flag = 1
     print("Your message: ", decode_m(hastads_attack(c, n, e)))
 
@@ -102,6 +99,13 @@ if args.a == "dp_brute":
     c = validation(c[0])
     n = validation(n[0])
     dp_brute(c, n, e)
+
+if args.a == "wieners":
+    print("\nHacking by Wiener's algorithm\n")
+    c = validation(c[0])
+    n = validation(n[0])
+    wieners_attack(e, n, c)
+
 
 '''
 # ENCRYPTION + DECRYPTION

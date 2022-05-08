@@ -8,12 +8,44 @@ def validation(a):
 
 
 def prime(n):
+    local_n = abs(n)
+    if local_n % 2 == 0:
+        return False
+    if local_n < 2:
+        return False
+    if local_n < 4:
+        return True
+
+    root = find_n_root(2, local_n)
+    print("root", "=", root)
+    for i in range(3, root + 1, 2):
+        if i % 1000001 == 0:
+            print(i)
+        if local_n % i == 0:
+            return False
+    return True
+
+
+primes_cash: [None, list[bool]] = None
+
+
+def prime2(n):
+    global primes_cash
     if n < 2:
-        return 0
-    for i in range(2, int(math.sqrt(n))):
-        if n % i == 0:
-            return 1
-    return 0
+        return False
+
+    if primes_cash is not None and n < len(primes_cash):
+        return primes_cash[n]
+
+    n += 1
+    primes = [True] * n
+    for base in range(2, int(n ** 0.5 + 1)):
+        if primes[base]:
+            primes[base*2:n:base] = [False] * (ceil(n / base) - 2)
+
+    primes[0] = primes[1] = False
+    primes_cash = primes
+    return primes[n - 1]
 
 
 def m_prime(a, b):
@@ -85,8 +117,8 @@ def decryption(e, c, n, p, q):
 def decryption_crt(e, c, n, p, q):
     phi = (p - 1) * (q - 1)
     d = pow(e, -1, phi)
-    dp = d % (p-1)
-    dq = d % (q-1)
+    dp = d % (p - 1)
+    dq = d % (q - 1)
     q_inv = pow(q, -1, p)
     m1 = pow(c, dp, p)
     m2 = pow(c, dq, q)
@@ -99,3 +131,36 @@ def decryption_crt(e, c, n, p, q):
         m = '0' + m
     m = unhexlify(m.replace('L', '')).decode("utf-8", "backslashreplace")
     return m
+
+
+def continued_fraction(e, n):
+    row = []
+    while n % e != 0:
+        tmp = e // n
+        row.append(tmp)
+        n, e = e, n
+        n = n - e * tmp
+    return row
+
+
+def solve_quadratics(a, b, c):
+    discr = pow(b, 2) - 4 * a * c
+    if discr > 0:
+        root = find_n_root(2, discr)
+        x1 = (-b + root) // (2 * a)
+        x2 = (-b - root) // (2 * a)
+        return x1, x2
+    elif discr == 0:
+        x = -b // (2 * a)
+        return x, x
+    else:
+        return None, None
+
+
+def req(arr, i, n):
+    if i < n - 1:
+        up, down = req(arr, i + 1, n)
+        new_down = arr[i] * down + up
+        return down, new_down
+    else:
+        return 1, arr[i]
