@@ -80,9 +80,12 @@ def dp_brute(c, n, e):
 
 
 def wieners_attack(e, n, c):
-    row = continued_fraction(e, n)
-    for i in range(2, len(row) + 1):
-        d, k = req(row, 0, i)
+    for row in continued_fraction(e, n):
+        # print(row)
+        if row == [0]:
+            continue
+
+        d, k = req(row, 0, len(row))
         phi = (e * d - 1) // k
         p, q = solve_quadratics(1, n - phi + 1, n)
         if p is None:

@@ -135,12 +135,13 @@ def decryption_crt(e, c, n, p, q):
 
 def continued_fraction(e, n):
     row = []
+    # for i in range(i):
     while n % e != 0:
         tmp = e // n
         row.append(tmp)
         n, e = e, n
         n = n - e * tmp
-    return row
+        yield row
 
 
 def solve_quadratics(a, b, c):
