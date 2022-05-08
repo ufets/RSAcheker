@@ -6,7 +6,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-c", nargs='+', help="ciphertext text")
 parser.add_argument("-n", nargs='+', help="part (n) of public key")
 parser.add_argument("-e", help="exponent")
-parser.add_argument('-a', help="name of algorithm: pollard, pq, hastad, dp_brute, wieners")
+parser.add_argument("-p", help="p-part")
+parser.add_argument("-q", help="q-part")
+parser.add_argument('-a', help="name of algorithm: pollard, pq, hastad, dp_brute, wieners, e_phi_not_co_prime")
 
 args = parser.parse_args()
 
@@ -20,7 +22,8 @@ else:
     sys.exit()
 
 if args.e:
-    e = validation(args.e)
+    # e = validation(args.e)
+    e = args.e
 else:
     e = 3
 
@@ -105,6 +108,12 @@ if args.a == "wieners":
     c = validation(c[0])
     n = validation(n[0])
     wieners_attack(e, n, c)
+
+if args.p and args.q and (args.a == "e_phi_not_co_prime"):
+    print("\nHacking by e_phi_attack:\n")
+    p = args.p
+    q = args.q
+    e_phi_attack(int(e), int(p), int(q), int(c[0]), int(n[0]))
 
 
 '''

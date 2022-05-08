@@ -64,15 +64,15 @@ def hastads_attack(c, n, e):
     return m
 
 
-def dp_brute(c, n, e):
+def dp_brute(c, n, e, num=1000000):
     m = 5
     p = 1
-    for dp in range(1000000):
+    for dp in range(num):
         p = math.gcd(pow(m, dp * e, n) - m, n)
         if p != 1:
             break
     if p == 1:
-        print("\nNe poluchilos, ne fartanulo")
+        print(f"\nBruteforce error! No dp from 1 to {num = }")
     else:
         q = n // p
         m = decryption_crt(e, c, n, p, q)
@@ -95,3 +95,12 @@ def wieners_attack(e, n, c):
             m = decryption_crt(e, c, n, abs(p), abs(q))
             print("Your message: ", m)
             return
+
+
+def e_phi_attack(e, p, q, c, n):
+    r = (p-1)*(q-1) // math.gcd(p-1, q-1)
+    d = pow(e, -1, r//e)
+    for i in range(e):
+        m = decode_m(pow(pow(c, d, n) * pow(pow(2, r//e, n), i, n), 1, n))
+        if m.find("flag", 0) != -1:
+            print("message:", m, "\n\n")
