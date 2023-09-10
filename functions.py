@@ -1,10 +1,8 @@
 import math
 from binascii import *
 
-
 def validation(a):
-    a = int(a[2:], 16)
-    return a
+    return int(a, 0)
 
 
 def prime(n):
@@ -41,7 +39,7 @@ def prime2(n):
     primes = [True] * n
     for base in range(2, int(n ** 0.5 + 1)):
         if primes[base]:
-            primes[base*2:n:base] = [False] * (ceil(n / base) - 2)
+            primes[base*2:n:base] = [False] * (math.ceil(n / base) - 2)
 
     primes[0] = primes[1] = False
     primes_cash = primes

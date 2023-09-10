@@ -43,7 +43,6 @@ def pollard_p_1(n):
 
 def crt(c, n):
     table = 0
-    # вынос
     num = len(c)
     for i in range(num):
         c[i] = int(c[i])
@@ -81,10 +80,8 @@ def dp_brute(c, n, e, num=1000000):
 
 def wieners_attack(e, n, c):
     for row in continued_fraction(e, n):
-        # print(row)
         if row == [0]:
             continue
-
         d, k = req(row, 0, len(row))
         phi = (e * d - 1) // k
         p, q = solve_quadratics(1, n - phi + 1, n)
@@ -97,10 +94,11 @@ def wieners_attack(e, n, c):
             return
 
 
-def e_phi_attack(e, p, q, c, n):
+def e_phi_attack(e, p, q, c, n, flag):
     r = (p-1)*(q-1) // math.gcd(p-1, q-1)
     d = pow(e, -1, r//e)
     for i in range(e):
         m = decode_m(pow(pow(c, d, n) * pow(pow(2, r//e, n), i, n), 1, n))
-        if m.find("flag", 0) != -1:
+        if m.find(flag, 0) != -1:
             print("message:", m, "\n\n")
+            break
