@@ -1,5 +1,5 @@
 # RSAcheker
-Cheks RSA data for vulnerabilities (for CTF). Program works in terminal.<br>
+Checks RSA data for vulnerabilities (for CTF). Program works in terminal.<br>
 Information: https://www.youtube.com/watch?v=B1fIjz9hSIQ&t=10s
 <br>
 <br>
